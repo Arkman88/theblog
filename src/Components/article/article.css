@@ -1,0 +1,33 @@
+.article-card {
+    width: 900px;
+    border: 1px solid black;
+    margin-bottom: 16px;
+}
+
+.article-body {
+    display: none;
+}
+
+.article-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.article-title{
+    color: #1890FF;
+}
+
+.article-user {
+    display: flex;
+    padding-right: 0;
+    justify-content:flex-end;
+    align-items:flex-start;
+    gap: 16px;
+}
+
+.user-name {
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}

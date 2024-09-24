@@ -1,0 +1,9 @@
+
+.articles-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Задает высоту экрана */
+    padding: 20px;
+}
