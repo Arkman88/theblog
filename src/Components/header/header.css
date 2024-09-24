@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 0 15px;
+    
+}
+
+.button {
+    width: 109px;
+    height: 51px;
+    margin-left: 15px;
+    background: none;
+    border: none;
+    font-size: 16px;
+}
+
+.singup {
+    border: 1px solid #52C41A;
+    border-radius: 5px;
+    color: #52C41A;
+}

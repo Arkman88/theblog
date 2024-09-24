@@ -13,20 +13,18 @@ const Article = ({ article }) => {
         <Row>
           <Col span={16}>
             <div className="article-header">
-              <h2 className="article-title">{article.title}</h2>
-              <button disabled>
+              <p className="article-title">{article.title}</p>
+              <button disabled className="like">
                 <img src={heart} alt="likes" /> {article.favoritesCount}
               </button>
             </div>
-
-            <p>{article.description}</p>
-            <p className="article-body">{article.body}</p>
-
             <div>
               {article.tagList.map((tag, index) => (
                 <Tag key={`${tag}-${index}`}>{tag}</Tag>
               ))}
             </div>
+            <p>{article.description}</p>
+            <p className="article-body">{article.body}</p>
           </Col>
 
           <Col span={8}>

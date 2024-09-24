@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useFetchArticlesQuery } from '../../Utils/articlesApi';
+import Spinner from '../spinner/spinner';
 
-import { Pagination, Spin, Alert } from 'antd';
+import { Pagination, Alert } from 'antd';
 
 import Article from '../article';
 import './articles-list.css';
@@ -15,7 +16,7 @@ const ArticlesList = () => {
     setCurrentPage(page);
   };
 
-  if (isLoading) return <Spin tip="Загрузка..." />;
+  if (isLoading) return <Spinner />;
   if (error) return <Alert message="Ошибка при загрузке статей" type="error" />;
 
   return (
