@@ -8,8 +8,12 @@ const Header = () => {
         <h2 className="blog">The blog!</h2>
       </Link>
       <div>
-        <button className="button">Sing In</button>
-        <button className="button singup">Sing Up</button>
+        <Link to={'/sign-in'}>
+          <button className="button">Sign In</button>
+        </Link>
+        <Link to={'/sign-up'}>
+          <button className="button singup">Sign Up</button>
+        </Link>
       </div>
     </header>
   );
