@@ -7,6 +7,11 @@
     
 }
 
+.header a {
+    text-decoration: none;
+    color: black;
+}
+
 .button {
     width: 109px;
     height: 51px;
@@ -20,4 +25,9 @@
     border: 1px solid #52C41A;
     border-radius: 5px;
     color: #52C41A;
+}
+
+.button:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -5,10 +5,6 @@
     box-shadow: 0px 4px 12px 0px #00000026;
 }
 
-.article-body {
-    display: none;
-}
-
 .article-header {
     display: flex;
     align-items: center;
@@ -40,4 +36,9 @@
     background-color: #fff;
     border: none;
 
+}
+
+.date {
+    margin: 0;
+    color: #b3b0b0;
 }

@@ -1,10 +1,11 @@
 import { Card, Col, Row, Avatar, Tag } from 'antd';
 import heart from '../../images/heart.svg';
 import { format } from 'date-fns';
-
+import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import './article.css';
 
-const Article = ({ article }) => {
+const Article = ({ article, isDetailPage }) => {
   const latestDate = new Date(article.updatedAt) > new Date(article.createdAt) ? article.updatedAt : article.createdAt;
 
   return (
@@ -13,7 +14,9 @@ const Article = ({ article }) => {
         <Row>
           <Col span={16}>
             <div className="article-header">
-              <p className="article-title">{article.title}</p>
+              <Link to={`/articles/${article.slug}`}>
+                <p className="article-title">{article.title}</p>
+              </Link>
               <button disabled className="like">
                 <img src={heart} alt="likes" /> {article.favoritesCount}
               </button>
@@ -23,8 +26,14 @@ const Article = ({ article }) => {
                 <Tag key={`${tag}-${index}`}>{tag}</Tag>
               ))}
             </div>
-            <p>{article.description}</p>
-            <p className="article-body">{article.body}</p>
+            {isDetailPage ? (
+              <>
+                <p>{article.description}</p>
+                <ReactMarkdown>{article.body}</ReactMarkdown>
+              </>
+            ) : (
+              <p>{article.description}</p>
+            )}
           </Col>
 
           <Col span={8}>
