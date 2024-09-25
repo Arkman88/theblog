@@ -22,9 +22,9 @@ const Article = ({ article, isDetailPage }) => {
               </button>
             </div>
             <div>
-              {article.tagList.map((tag, index) => (
-                <Tag key={`${tag}-${index}`}>{tag}</Tag>
-              ))}
+              {article.tagList &&
+                article.tagList.length > 0 &&
+                article.tagList.map((tag, index) => <Tag key={`${tag}-${index}`}>{tag}</Tag>)}
             </div>
             {isDetailPage ? (
               <>
