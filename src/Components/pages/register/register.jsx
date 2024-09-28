@@ -15,7 +15,14 @@ const Register = () => {
       message.success('Registration successful!');
       console.log('Result:', result);
     } catch (error) {
-      message.error('Registration failed!');
+      if (error?.data?.errors) {
+        const errorMessages = Object.entries(error.data.errors)
+          .map(([field, message]) => `${field}: ${message}`)
+          .join(', ');
+        message.error(`${errorMessages}`);
+      } else {
+        message.error('Registration failed!');
+      }
       console.error('Error:', error);
     }
   };
