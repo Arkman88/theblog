@@ -40,6 +40,13 @@ export const articlesApi = createApi({
         body: { user: userData },
       }),
     }),
+    likeArticle: builder.mutation({
+      query: ({ slug, method }) => ({
+        url: `articles/${slug}/favorite`,
+        method,
+        body: {},
+      }),
+    }),
   }),
 });
 
@@ -49,4 +56,5 @@ export const {
   useLoginUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,
+  useLikeArticleMutation,
 } = articlesApi;

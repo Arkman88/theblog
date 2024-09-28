@@ -54,7 +54,14 @@ const Profile = () => {
 
       message.success('Profile updated successfully!');
     } catch (error) {
-      message.error(error.message || 'Failed to update profile');
+      if (error?.data?.errors) {
+        const errorMessages = Object.entries(error.data.errors)
+          .map(([field, message]) => `${field}: ${message}`)
+          .join(', ');
+        message.error(`${errorMessages}`);
+      } else {
+        message.error('Registration failed!');
+      }
     }
   };
 

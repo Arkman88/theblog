@@ -23,7 +23,14 @@ const Login = () => {
       console.log(result.user.image);
       navigate('/');
     } catch (error) {
-      message.error('Login failed!');
+      if (error?.data?.errors) {
+        const errorMessages = Object.entries(error.data.errors)
+          .map(([field, message]) => `${field}: ${message}`)
+          .join(', ');
+        message.error(`${errorMessages}`);
+      } else {
+        message.error('Registration failed!');
+      }
     }
   };
 

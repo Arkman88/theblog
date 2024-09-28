@@ -1,12 +1,51 @@
 import { Card, Col, Row, Avatar, Tag } from 'antd';
-import heart from '../../../images/heart.svg';
+import heart from '../../../images/heart-empty.svg';
+import heartFilled from '../../../images/heart-full.svg';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { useSelector } from 'react-redux';
+import { useLikeArticleMutation } from '../../../Utils/articlesApi';
+import { useState } from 'react';
 import './article.css';
 
 const Article = ({ article, isDetailPage }) => {
   const latestDate = new Date(article.updatedAt) > new Date(article.createdAt) ? article.updatedAt : article.createdAt;
+
+  const { user } = useSelector((state) => state.user);
+
+  const token = user?.token;
+
+  const isLoggedIn = Boolean(token);
+
+  const [likeArticle] = useLikeArticleMutation();
+  const [favoritesCount, setFavoritesCount] = useState(article.favoritesCount);
+  const [liked, setLiked] = useState(false);
+
+  const handleLike = async () => {
+    if (!isLoggedIn) {
+      alert('Please log in to like articles!');
+      return;
+    }
+
+    try {
+      if (liked) {
+        await likeArticle({ slug: article.slug, method: 'DELETE' }).unwrap();
+        console.log(article.slug);
+        setFavoritesCount(favoritesCount - 1);
+      } else {
+        await likeArticle({ slug: article.slug, method: 'POST' }).unwrap();
+        console.log(article.slug);
+
+        setFavoritesCount(favoritesCount + 1);
+      }
+      setLiked(!liked);
+      console.log('Article like toggled successfully!');
+    } catch (error) {
+      console.error('Error toggling article like:', error);
+      alert('Failed to toggle like on the article.');
+    }
+  };
 
   return (
     <Col span={24} key={article.slug}>
@@ -17,9 +56,14 @@ const Article = ({ article, isDetailPage }) => {
               <Link to={`/articles/${article.slug}`}>
                 <p className="article-title">{article.title}</p>
               </Link>
-              <button disabled className="like">
-                <img src={heart} alt="likes" /> {article.favoritesCount}
-              </button>
+              <img
+                onClick={isLoggedIn ? handleLike : null}
+                src={liked ? heartFilled : heart}
+                alt="likes"
+                className="like"
+                style={{ cursor: isLoggedIn ? 'pointer' : 'not-allowed', opacity: isLoggedIn ? 1 : 0.5 }}
+              />
+              <span className="like-num">{favoritesCount}</span>
             </div>
             <div>
               {article.tagList &&
