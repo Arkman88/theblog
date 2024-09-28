@@ -14,20 +14,54 @@
 
 .button {
     width: 109px;
-    height: 51px;
+    height: 40px;
     margin-left: 15px;
     background: none;
     border: none;
     font-size: 16px;
 }
 
-.singup {
+.sign-up {
     border: 1px solid #52C41A;
     border-radius: 5px;
     color: #52C41A;
 }
 
+.log-out {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 .button:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.create-article {
+    border: 1px solid #52C41A;
+    border-radius: 5px;
+    color: #52C41A;
+    width: 100px;
+    height: 30px;
+    margin-right: 20px;
+    font-size: 12px;
+    padding: 0;
+}
+
+.username {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.image {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    margin: 0;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

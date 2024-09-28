@@ -1,12 +1,30 @@
-import { Card, Form, Input, Button, Typography } from 'antd';
-import { Link } from 'react-router-dom';
+import { Card, Form, Input, Button, Typography, message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useLoginUserMutation } from '../../../Utils/articlesApi';
+import { setUser } from '../../../store/slices/userSlice';
+
 import './login.css';
 
 const { Title, Text } = Typography;
 
 const Login = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const dispatch = useDispatch();
+  const [loginUser] = useLoginUserMutation();
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    try {
+      const { email, password } = values;
+      const result = await loginUser({ email, password }).unwrap();
+      message.success('Login successful!');
+      dispatch(setUser(result.user));
+      setUser(values);
+      console.log(result.user.image);
+      navigate('/');
+    } catch (error) {
+      message.error('Login failed!');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -22,7 +40,7 @@ const Login = () => {
         <Form name="login" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             label="Email address"
-            name="Email address"
+            name="email"
             rules={[
               { required: true, message: 'Please input your email!' },
               { type: 'email', message: 'Please enter a valid email!' },

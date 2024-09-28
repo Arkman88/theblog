@@ -1,5 +1,5 @@
 import { Card, Col, Row, Avatar, Tag } from 'antd';
-import heart from '../../images/heart.svg';
+import heart from '../../../images/heart.svg';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';

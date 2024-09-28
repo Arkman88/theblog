@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { Pagination, Alert } from 'antd';
 
-import Article from '../article';
+import Article from '../pages/article';
 import './articles-list.css';
 
 const ArticlesList = () => {

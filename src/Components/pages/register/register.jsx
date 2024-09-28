@@ -1,12 +1,23 @@
-import { Card, Form, Input, Button, Checkbox, Typography } from 'antd';
+import { useCreateUserMutation } from '../../../Utils/articlesApi';
+import { Card, Form, Input, Button, Checkbox, Typography, message } from 'antd';
 import { Link } from 'react-router-dom';
 import './register.css';
 
 const { Title, Text } = Typography;
 
 const Register = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const [createUser] = useCreateUserMutation();
+
+  const onFinish = async (values) => {
+    try {
+      const { username, email, password } = values;
+      const result = await createUser({ username, email, password }).unwrap();
+      message.success('Registration successful!');
+      console.log('Result:', result);
+    } catch (error) {
+      message.error('Registration failed!');
+      console.error('Error:', error);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -33,7 +44,7 @@ const Register = () => {
 
           <Form.Item
             label="Email address"
-            name="Email address"
+            name="email"
             rules={[
               { required: true, message: 'Please input your email!' },
               { type: 'email', message: 'Please enter a valid email!' },
