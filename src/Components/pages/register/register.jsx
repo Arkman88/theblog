@@ -11,7 +11,8 @@ const Register = () => {
   const onFinish = async (values) => {
     try {
       const { username, email, password } = values;
-      const result = await createUser({ username, email, password }).unwrap();
+      const lowerCaseEmail = email.toLowerCase();
+      const result = await createUser({ username, lowerCaseEmail, password }).unwrap();
       message.success('Registration successful!');
       console.log('Result:', result);
     } catch (error) {
