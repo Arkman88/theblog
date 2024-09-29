@@ -13,6 +13,7 @@ const Profile = () => {
   const { data: userData, error, isLoading } = useGetUserQuery();
   const [updateUser] = useUpdateUserMutation();
   const user = useSelector(selectUser);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (userData && userData.user) {
@@ -50,17 +51,20 @@ const Profile = () => {
     try {
       const updatedUser = await updateUser(updatedData).unwrap();
       dispatch(setUser(updatedUser.user));
-      console.log('updated user is ', user);
 
       message.success('Profile updated successfully!');
     } catch (error) {
       if (error?.data?.errors) {
-        const errorMessages = Object.entries(error.data.errors)
-          .map(([field, message]) => `${field}: ${message}`)
-          .join(', ');
-        message.error(`${errorMessages}`);
+        const serverErrors = Object.entries(error.data.errors).map(([field, message]) => ({
+          name: field,
+          errors: [message],
+        }));
+
+        form.setFields(serverErrors);
+
+        message.error('There were some errors with your submission.');
       } else {
-        message.error('Registration failed!');
+        message.error('Profile update failed.');
       }
     }
   };
@@ -76,6 +80,7 @@ const Profile = () => {
           Edit profile
         </Title>
         <Form
+          form={form}
           name="profile"
           layout="vertical"
           initialValues={initialValues}
@@ -90,6 +95,7 @@ const Profile = () => {
               { required: true, message: 'Please input your username!' },
               { min: 3, message: 'Username must be at least 3 characters long!' },
             ]}
+            hasFeedback
           >
             <Input placeholder="Username" />
           </Form.Item>
@@ -101,6 +107,7 @@ const Profile = () => {
               { required: true, message: 'Please input your email!' },
               { type: 'email', message: 'Please enter a valid email!' },
             ]}
+            hasFeedback
           >
             <Input placeholder="Email address" />
           </Form.Item>
@@ -109,16 +116,18 @@ const Profile = () => {
             label="New password"
             name="password"
             rules={[{ min: 6, message: 'Password must be at least 6 characters long!' }]}
+            hasFeedback
           >
             <Input.Password placeholder="New password (optional)" />
           </Form.Item>
 
           <Form.Item
-            label="image image (URL)"
+            label="Profile image (URL)"
             name="image"
             rules={[{ type: 'url', message: 'Please enter a valid URL!' }]}
+            hasFeedback
           >
-            <Input placeholder="image image URL" />
+            <Input placeholder="Profile image URL" />
           </Form.Item>
 
           <Form.Item>

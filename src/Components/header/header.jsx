@@ -10,6 +10,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(clearUser());
+    localStorage.removeItem('token');
     navigate('/');
   };
 
