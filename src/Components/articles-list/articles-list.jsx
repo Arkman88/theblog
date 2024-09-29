@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useFetchArticlesQuery } from '../../Utils/articlesApi';
+import { useFetchArticlesQuery } from '../../store/articlesApi';
 import Spinner from '../spinner/spinner';
 import { useParams } from 'react-router-dom';
 

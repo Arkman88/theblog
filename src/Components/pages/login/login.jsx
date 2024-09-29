@@ -1,7 +1,7 @@
 import { Card, Form, Input, Button, Typography, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginUserMutation } from '../../../Utils/articlesApi';
+import { useLoginUserMutation } from '../../../store/articlesApi';
 import { setUser, selectUser } from '../../../store/slices/userSlice';
 import { useEffect } from 'react';
 
@@ -24,40 +24,27 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      const { email, password } = values;
-      const result = await loginUser({ email, password }).unwrap();
-
-      localStorage.setItem('token', result.token);
+      const result = await loginUser(values).unwrap();
       message.success('Login successful!');
       dispatch(setUser(result.user));
       navigate('/');
     } catch (error) {
-      if (error?.data?.errors) {
-        const serverErrors = Object.entries(error.data.errors).map(([field, message]) => ({
-          name: field,
-          errors: [message],
-        }));
+      const errorMessage = error?.data?.errors
+        ? Object.entries(error.data.errors).map(([field, msg]) => ({ name: field, errors: [msg] }))
+        : ['Login failed!'];
 
-        form.setFields(serverErrors);
-
-        message.error('There were some errors with your login.');
-      } else {
-        message.error('Login failed!');
-      }
+      form.setFields(error?.data?.errors ? errorMessage : []);
+      message.error('There were some errors with your login.');
     }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
   };
 
   return (
     <div className="login">
-      <Card className="login-card" bordered={true}>
+      <Card className="login-card" bordered>
         <Title level={3} className="login-title">
           Sign In
         </Title>
-        <Form form={form} name="login" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} name="login" layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Email address"
             name="email"

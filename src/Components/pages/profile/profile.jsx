@@ -2,7 +2,7 @@ import { Card, Form, Input, Button, Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Spinner from '../../spinner/spinner';
-import { useGetUserQuery, useUpdateUserMutation } from '../../../Utils/articlesApi';
+import { useGetUserQuery, useUpdateUserMutation } from '../../../store/articlesApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../../../store/slices/userSlice';
 import './profile.css';
@@ -18,7 +18,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData && userData.user) {
+    if (userData?.user) {
       dispatch(setUser(userData.user));
     }
   }, [userData, dispatch]);
@@ -32,11 +32,10 @@ const Profile = () => {
     return null;
   }
 
-  const defaultimage = 'https://static.productionready.io/images/smiley-cyrus.jpg';
   const initialValues = {
     username: user?.username || '',
     email: user?.email || '',
-    image: user?.image || defaultimage,
+    image: user?.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
   };
 
   const onFinish = async (values) => {
@@ -44,11 +43,8 @@ const Profile = () => {
       email: values.email,
       username: values.username,
       image: values.image || null,
+      ...(values.password && { password: values.password }),
     };
-
-    if (values.password) {
-      updatedData.password = values.password;
-    }
 
     try {
       const updatedUser = await updateUser(updatedData).unwrap();
@@ -61,9 +57,7 @@ const Profile = () => {
           name: field,
           errors: [message],
         }));
-
         form.setFields(serverErrors);
-
         message.error('There were some errors with your submission.');
       } else {
         message.error('Profile update failed.');
@@ -71,14 +65,10 @@ const Profile = () => {
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
-    <div className="register">
-      <Card className="register-card" bordered={true}>
-        <Title level={3} className="register-title">
+    <div className="profile">
+      <Card className="profile-card" bordered={true}>
+        <Title level={3} className="profile-title">
           Edit profile
         </Title>
         <Form
@@ -87,7 +77,6 @@ const Profile = () => {
           layout="vertical"
           initialValues={initialValues}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           requiredMark={false}
         >
           <Form.Item

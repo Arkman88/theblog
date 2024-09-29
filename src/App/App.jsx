@@ -1,8 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { initializeUser } from '../store/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { initializeUser, checkAuthentication } from '../store/slices/userSlice';
+import PrivateRoute from '../store/privateRoute';
 
+// components & pages
 import ArticlesList from '../Components/articles-list/articles-list';
 import Header from '../Components/header';
 import Register from '../Components/pages/register';
@@ -11,18 +13,19 @@ import Profile from '../Components/pages/profile';
 import NewArticle from '../Components/pages/new-article/new-article';
 import NotFound from '../Components/pages/not-found/not-found';
 
-import PrivateRoute from '../Utils/privateRoute';
-
 import './App.css';
 
 const App = () => {
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user.user);
+
   useEffect(() => {
     dispatch(initializeUser());
+    dispatch(checkAuthentication());
   }, [dispatch]);
 
-  const isAuthenticated = !!localStorage.getItem('token');
+  const isAuthenticated = !!user;
   console.log(isAuthenticated);
 
   return (

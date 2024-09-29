@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useSelector } from 'react-redux';
-import { useLikeArticleMutation } from '../../../Utils/articlesApi';
+import { useLikeArticleMutation } from '../../../store/articlesApi';
 import { useState } from 'react';
 import './article.css';
 
