@@ -1,4 +1,5 @@
 import { Card, Form, Input, Button, Typography, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Spinner from '../../spinner/spinner';
 import { useGetUserQuery, useUpdateUserMutation } from '../../../Utils/articlesApi';
@@ -14,6 +15,7 @@ const Profile = () => {
   const [updateUser] = useUpdateUserMutation();
   const user = useSelector(selectUser);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userData && userData.user) {
@@ -51,8 +53,8 @@ const Profile = () => {
     try {
       const updatedUser = await updateUser(updatedData).unwrap();
       dispatch(setUser(updatedUser.user));
-
       message.success('Profile updated successfully!');
+      navigate('/');
     } catch (error) {
       if (error?.data?.errors) {
         const serverErrors = Object.entries(error.data.errors).map(([field, message]) => ({
