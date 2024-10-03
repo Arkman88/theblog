@@ -31,12 +31,9 @@ const Article = ({ article, isDetailPage }) => {
     try {
       if (liked) {
         await likeArticle({ slug: article.slug, method: 'DELETE' }).unwrap();
-        console.log(article.slug);
         setFavoritesCount(favoritesCount - 1);
       } else {
         await likeArticle({ slug: article.slug, method: 'POST' }).unwrap();
-        console.log(article.slug);
-
         setFavoritesCount(favoritesCount + 1);
       }
       setLiked(!liked);

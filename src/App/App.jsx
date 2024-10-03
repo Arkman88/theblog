@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { initializeUser, checkAuthentication } from '../store/slices/userSlice';
+import { initializeUser } from '../store/slices/userSlice';
 import PrivateRoute from '../store/privateRoute';
 
 // components & pages
@@ -22,7 +22,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeUser());
-    dispatch(checkAuthentication());
   }, [dispatch]);
 
   const isAuthenticated = !!user;

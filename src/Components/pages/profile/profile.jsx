@@ -5,6 +5,7 @@ import Spinner from '../../spinner/spinner';
 import { useGetUserQuery, useUpdateUserMutation } from '../../../store/articlesApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../../../store/slices/userSlice';
+
 import './profile.css';
 
 const { Title } = Typography;
