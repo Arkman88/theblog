@@ -1,6 +1,6 @@
 import { useCreateUserMutation } from '../../../store/articlesApi';
 import { Card, Form, Input, Button, Checkbox, Typography, message } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/slices/userSlice';
 import './register.css';
@@ -10,6 +10,7 @@ const { Title, Text } = Typography;
 const Register = () => {
   const [createUser] = useCreateUserMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     try {
@@ -17,6 +18,7 @@ const Register = () => {
       const result = await createUser({ username, email, password }).unwrap();
       message.success('Registration successful!');
       dispatch(setUser(result.user));
+      navigate('/');
     } catch (error) {
       if (error?.data?.errors) {
         const errorMessages = Object.entries(error.data.errors)

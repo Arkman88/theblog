@@ -62,7 +62,7 @@ const Article = ({ article, isDetailPage }) => {
               />
               <span className="like-num">{favoritesCount}</span>
             </div>
-            <div>
+            <div className="article-tags">
               {article.tagList &&
                 article.tagList.length > 0 &&
                 article.tagList.map((tag, index) => <Tag key={`${tag}-${index}`}>{tag}</Tag>)}
@@ -73,7 +73,7 @@ const Article = ({ article, isDetailPage }) => {
                 <ReactMarkdown>{article.body}</ReactMarkdown>
               </>
             ) : (
-              <p>{article.description}</p>
+              <p className="article-description">{article.description}</p>
             )}
           </Col>
 

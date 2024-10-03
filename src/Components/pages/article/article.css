@@ -5,11 +5,32 @@
     box-shadow: 0px 4px 12px 0px #00000026;
     padding: 16px;
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
 }
 
 .article-header {
     display: flex;
-    align-items: center;
+    align-items:flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.article-tags {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;   
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.article-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;    
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .like {
@@ -28,6 +49,10 @@
     font-size: 20px;
     margin: 0;
     margin-bottom: 10px;
+    white-space: nowrap;      
+    overflow: hidden;  
+    text-overflow: ellipsis;
+    max-width: 400px;
 }
 
 .article-user {
