@@ -1,0 +1,19 @@
+.new-article {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
+    align-items: center;
+    border: 1px solid #fff;
+    margin-bottom: 16px;
+    box-shadow: 0px 4px 12px 0px #00000026;
+}
+
+.new-article-card {
+    width: 900px;
+}
+
+.new-article-tag {
+    width: 300px;
+    margin-right: 16px;
+}

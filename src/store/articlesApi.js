@@ -47,6 +47,13 @@ export const articlesApi = createApi({
         body: {},
       }),
     }),
+    createArticle: builder.mutation({
+      query: (articleData) => ({
+        url: 'articles',
+        method: 'POST',
+        body: { article: articleData },
+      }),
+    }),
   }),
 });
 
@@ -57,4 +64,5 @@ export const {
   useGetUserQuery,
   useUpdateUserMutation,
   useLikeArticleMutation,
+  useCreateArticleMutation,
 } = articlesApi;

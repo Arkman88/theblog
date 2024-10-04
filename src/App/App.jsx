@@ -5,13 +5,13 @@ import { initializeUser } from '../store/slices/userSlice';
 import PrivateRoute from '../store/privateRoute';
 
 // components & pages
-import ArticlesList from '../Components/articles-list/articles-list';
+import ArticlesList from '../Components/articles-list';
 import Header from '../Components/header';
 import Register from '../Components/pages/register';
 import Login from '../Components/pages/login';
 import Profile from '../Components/pages/profile';
-import NewArticle from '../Components/pages/new-article/new-article';
-import NotFound from '../Components/pages/not-found/not-found';
+import NewArticle from '../Components/pages/new-article';
+import NotFound from '../Components/pages/not-found';
 
 import './App.css';
 
