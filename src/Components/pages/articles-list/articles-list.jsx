@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useFetchArticlesQuery } from '../../store/articlesApi';
-import Spinner from '../spinner/spinner';
+import { useFetchArticlesQuery } from '../../../store/articlesApi';
+import Spinner from '../../spinner/spinner';
 import { useParams } from 'react-router-dom';
 
 import { Pagination, Alert } from 'antd';
 
-import Article from '../pages/article';
-import './articles-list.css';
+import Article from '../article';
+import styles from './articles-list.module.scss';
 
 const ArticlesList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,7 @@ const ArticlesList = () => {
   const article = slug ? data.articles.find((article) => article.slug === slug) : null;
 
   return (
-    <div className="articles-list">
+    <div className={styles['articles-list']}>
       {article ? (
         <Article key={article.slug} article={article} isDetailPage={true} />
       ) : (

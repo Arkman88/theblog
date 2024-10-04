@@ -1,12 +1,12 @@
 import { Spin } from 'antd';
-import './spinner.css';
+import styles from './spinner.module.scss';
 
 const Spinner = ({ tip = 'Loading...' }) => {
   return (
-    <div className="spinner">
-      <div className="spinner-content">
+    <div className={styles.spinner}>
+      <div className={styles['spinner-content']}>
         <Spin size="large" />
-        <div className="spinner-tip">{tip}</div>
+        <div className={styles['spinner-tip']}>{tip}</div>
       </div>
     </div>
   );

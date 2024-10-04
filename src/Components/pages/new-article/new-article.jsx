@@ -3,8 +3,7 @@ import { Card, Form, Input, Button, message, Typography } from 'antd';
 import { useCreateArticleMutation } from '../../../store/articlesApi';
 import { useNavigate } from 'react-router-dom';
 
-// import styles from './new-article.module.scss';
-import './new-article.css';
+import styles from './new-article.module.scss';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -51,9 +50,9 @@ const NewArticle = () => {
   };
 
   return (
-    <div className="new-article">
-      <Card className="new-article-card" bordered={true}>
-        <Title level={3} className="new-article-title">
+    <div className={styles['new-article']}>
+      <Card className={styles['new-article-card']} bordered={true}>
+        <Title level={3} className={styles['new-article-title']}>
           Create New Article
         </Title>
         <Form name="new-article" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -77,7 +76,7 @@ const NewArticle = () => {
             {tagList.map((tag, index) => (
               <div key={index} className="tag-input">
                 <Input
-                  className="new-article-tag"
+                  className={styles['new-article-tag']}
                   placeholder="Tag"
                   value={tag}
                   onChange={(e) => handleTagChange(index, e.target.value)}
@@ -87,7 +86,7 @@ const NewArticle = () => {
                 </Button>
               </div>
             ))}
-            <Button className="add-tag" type="dashed" onClick={addTag}>
+            <Button className={styles['add-tag']} type="dashed" onClick={addTag}>
               Add Tag
             </Button>
           </Form.Item>

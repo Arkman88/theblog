@@ -5,7 +5,7 @@ import { useLoginUserMutation } from '../../../store/articlesApi';
 import { setUser, selectUser } from '../../../store/slices/userSlice';
 import { useEffect } from 'react';
 
-import './login.css';
+import styles from './login.module.scss';
 
 const { Title, Text } = Typography;
 
@@ -39,8 +39,8 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <Card className="login-card" bordered>
+    <div className={styles.login}>
+      <Card className={styles['login-card']} bordered>
         <Title level={3} className="login-title">
           Sign In
         </Title>

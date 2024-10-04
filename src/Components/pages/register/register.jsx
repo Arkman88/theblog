@@ -3,7 +3,8 @@ import { Card, Form, Input, Button, Checkbox, Typography, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/slices/userSlice';
-import './register.css';
+
+import styles from './register.module.scss';
 
 const { Title, Text } = Typography;
 
@@ -37,8 +38,8 @@ const Register = () => {
   };
 
   return (
-    <div className="register">
-      <Card className="register-card" bordered={true}>
+    <div className={styles.register}>
+      <Card className={styles['register-card']} bordered={true}>
         <Title level={3} className="register-title">
           Create new account
         </Title>
@@ -115,7 +116,7 @@ const Register = () => {
             </Button>
           </Form.Item>
         </Form>
-        <div className="login-link">
+        <div className={styles['login-link']}>
           <Text>Already have an account? </Text>
           <Link to="/sign-in">Sign In</Link>
         </div>

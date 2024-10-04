@@ -6,7 +6,7 @@ import { useGetUserQuery, useUpdateUserMutation } from '../../../store/articlesA
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../../../store/slices/userSlice';
 
-import './profile.css';
+import styles from './profile.module.scss';
 
 const { Title } = Typography;
 
@@ -67,8 +67,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile">
-      <Card className="profile-card" bordered={true}>
+    <div className={styles.profile}>
+      <Card className={styles['profile-card']} bordered={true}>
         <Title level={3} className="profile-title">
           Edit profile
         </Title>

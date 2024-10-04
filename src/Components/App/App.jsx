@@ -1,34 +1,34 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { initializeUser } from '../store/slices/userSlice';
-import PrivateRoute from '../store/privateRoute';
+import { initializeUser } from '../../store/slices/userSlice';
+import PrivateRoute from '../../store/privateRoute';
 
 // components & pages
-import ArticlesList from '../Components/articles-list';
-import Header from '../Components/header';
-import Register from '../Components/pages/register';
-import Login from '../Components/pages/login';
-import Profile from '../Components/pages/profile';
-import NewArticle from '../Components/pages/new-article';
-import NotFound from '../Components/pages/not-found';
+import ArticlesList from '../pages/articles-list';
+import Header from '../header';
+import Register from '../pages/register';
+import Login from '../pages/login';
+import Profile from '../pages/profile';
+import NewArticle from '../pages/new-article';
+import NotFound from '../pages/not-found';
 
-import './App.css';
+import styles from './App.module.scss';
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(initializeUser());
   }, [dispatch]);
 
+  const user = useSelector((state) => state.user.user);
+
   const isAuthenticated = !!user;
-  console.log(isAuthenticated);
+  console.log('user is login: ', isAuthenticated);
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <Header />
       <Routes>
         <Route path="/" element={<ArticlesList />} />

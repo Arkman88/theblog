@@ -7,7 +7,8 @@ import ReactMarkdown from 'react-markdown';
 import { useSelector } from 'react-redux';
 import { useLikeArticleMutation } from '../../../store/articlesApi';
 import { useState } from 'react';
-import './article.css';
+
+import styles from './article.module.scss';
 
 const Article = ({ article, isDetailPage }) => {
   const latestDate = new Date(article.updatedAt) > new Date(article.createdAt) ? article.updatedAt : article.createdAt;
@@ -46,23 +47,23 @@ const Article = ({ article, isDetailPage }) => {
 
   return (
     <Col span={24} key={article.slug}>
-      <Card className="article-card" bordered={false}>
+      <Card className={styles['article-card']} bordered={false}>
         <Row>
           <Col span={16}>
-            <div className="article-header">
+            <div className={styles['article-header']}>
               <Link to={`/articles/${article.slug}`}>
-                <p className="article-title">{article.title}</p>
+                <p className={styles['article-title']}>{article.title}</p>
               </Link>
               <img
                 onClick={isLoggedIn ? handleLike : null}
                 src={liked ? heartFilled : heart}
                 alt="likes"
-                className="like"
+                className={styles.like}
                 style={{ cursor: isLoggedIn ? 'pointer' : 'not-allowed', opacity: isLoggedIn ? 1 : 0.5 }}
               />
-              <span className="like-num">{favoritesCount}</span>
+              <span className={styles['like-num']}>{favoritesCount}</span>
             </div>
-            <div className="article-tags">
+            <div className={styles['article-tags']}>
               {article.tagList &&
                 article.tagList.length > 0 &&
                 article.tagList.map((tag, index) => <Tag key={`${tag}-${index}`}>{tag}</Tag>)}
@@ -73,15 +74,15 @@ const Article = ({ article, isDetailPage }) => {
                 <ReactMarkdown>{article.body}</ReactMarkdown>
               </>
             ) : (
-              <p className="article-description">{article.description}</p>
+              <p className={styles['article-description']}>{article.description}</p>
             )}
           </Col>
 
           <Col span={8}>
-            <div className="article-user">
+            <div className={styles['article-user']}>
               <div>
-                <p className="user-name">{article.author.username}</p>
-                <p className="date">{format(new Date(latestDate), 'MMMM d, yyyy')}</p>
+                <p className={styles['user-name']}>{article.author.username}</p>
+                <p className={styles.date}>{format(new Date(latestDate), 'MMMM d, yyyy')}</p>
               </div>
               <Avatar size={64} src={article.author.image} alt={article.author.username} />
             </div>
