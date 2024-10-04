@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Card, Form, Input, Button, message, Typography } from 'antd';
-import { useCreateArticleMutation } from '../../../store/articlesApi';
+import { useCreateArticleMutation, useFetchArticlesQuery } from '../../../store/articlesApi';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './new-article.module.scss';
@@ -11,6 +11,7 @@ const { TextArea } = Input;
 const NewArticle = () => {
   const [tagList, setTags] = useState(['']);
   const [createArticle] = useCreateArticleMutation();
+  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -23,7 +24,9 @@ const NewArticle = () => {
         tagList,
       }).unwrap();
       message.success(`Article created successfully! Title: ${result.article.title}`);
-      navigate('/');
+
+      await refetchArticles();
+      navigate('/articles');
     } catch (error) {
       message.error('Failed to create article');
       console.error('Error:', error);

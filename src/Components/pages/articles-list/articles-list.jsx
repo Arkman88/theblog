@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFetchArticlesQuery } from '../../../store/articlesApi';
 import Spinner from '../../spinner/spinner';
 import { useParams } from 'react-router-dom';
@@ -11,8 +11,14 @@ import styles from './articles-list.module.scss';
 const ArticlesList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  const { data, error, isLoading } = useFetchArticlesQuery({ limit, offset: (currentPage - 1) * limit });
+  const { data, error, isLoading, refetch } = useFetchArticlesQuery({ limit, offset: (currentPage - 1) * limit });
   const { slug } = useParams();
+
+  useEffect(() => {
+    if (slug) {
+      refetch();
+    }
+  }, [slug, refetch]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
