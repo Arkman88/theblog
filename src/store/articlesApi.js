@@ -16,6 +16,9 @@ export const articlesApi = createApi({
     fetchArticles: builder.query({
       query: ({ limit = 5, offset = 0 }) => `articles?limit=${limit}&offset=${offset}`,
     }),
+    getArticle: builder.query({
+      query: (slug) => `articles/${slug}`,
+    }),
     createUser: builder.mutation({
       query: (userData) => ({
         url: 'users',
@@ -54,15 +57,31 @@ export const articlesApi = createApi({
         body: { article: articleData },
       }),
     }),
+    deleteArticle: builder.mutation({
+      query: (slug) => ({
+        url: `articles/${slug}`,
+        method: 'DELETE',
+      }),
+    }),
+    updateArticle: builder.mutation({
+      query: ({ slug, articleData }) => ({
+        url: `articles/${slug}`,
+        method: 'PUT',
+        body: { article: articleData },
+      }),
+    }),
   }),
 });
 
 export const {
   useFetchArticlesQuery,
+  useGetArticleQuery,
   useCreateUserMutation,
   useLoginUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,
   useLikeArticleMutation,
   useCreateArticleMutation,
+  useUpdateArticleMutation,
+  useDeleteArticleMutation,
 } = articlesApi;

@@ -77,6 +77,11 @@
     color: #b3b0b0;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width: 768px) {
     .article-card {
         max-width: 100%;

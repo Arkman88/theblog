@@ -12,6 +12,7 @@ import Login from '../pages/login';
 import Profile from '../pages/profile';
 import NewArticle from '../pages/new-article';
 import NotFound from '../pages/not-found';
+import EditArticle from '../pages/edit-article';
 
 import styles from './App.module.scss';
 
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/articles/:slug" element={<ArticlesList />} />
         <Route path="/sign-up" element={<Register />} />
         <Route path="/sign-in" element={<Login />} />
+        <Route path="/articles/:slug/edit" element={<EditArticle />} />
         <Route
           path="/profile"
           element={

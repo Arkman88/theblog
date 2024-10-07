@@ -1,25 +1,27 @@
-import { Card, Col, Row, Avatar, Tag } from 'antd';
+import { Card, Col, Row, Avatar, Tag, Popconfirm, message } from 'antd';
 import heart from '../../../images/heart-empty.svg';
 import heartFilled from '../../../images/heart-full.svg';
 import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useSelector } from 'react-redux';
-import { useLikeArticleMutation } from '../../../store/articlesApi';
+import { useLikeArticleMutation, useDeleteArticleMutation, useFetchArticlesQuery } from '../../../store/articlesApi';
 import { useState } from 'react';
 
 import styles from './article.module.scss';
 
 const Article = ({ article, isDetailPage }) => {
   const latestDate = new Date(article.updatedAt) > new Date(article.createdAt) ? article.updatedAt : article.createdAt;
-
   const { user } = useSelector((state) => state.user);
-
   const token = user?.token;
-
   const isLoggedIn = Boolean(token);
+  const navigate = useNavigate();
+  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
+
+  const isAuthor = user?.username === article.author.username;
 
   const [likeArticle] = useLikeArticleMutation();
+  const [deleteArticle] = useDeleteArticleMutation();
   const [favoritesCount, setFavoritesCount] = useState(article.favoritesCount);
   const [liked, setLiked] = useState(false);
 
@@ -43,6 +45,23 @@ const Article = ({ article, isDetailPage }) => {
       console.error('Error toggling article like:', error);
       alert('Failed to toggle like on the article.');
     }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteArticle(article.slug).unwrap();
+      message.success('Article deleted successfully');
+
+      await refetchArticles();
+      navigate('/articles');
+    } catch (error) {
+      message.error('Failed to delete article');
+      console.error('Error deleting article:', error);
+    }
+  };
+
+  const handleEdit = () => {
+    navigate(`/articles/${article.slug}/edit`);
   };
 
   return (
@@ -83,6 +102,23 @@ const Article = ({ article, isDetailPage }) => {
               <div>
                 <p className={styles['user-name']}>{article.author.username}</p>
                 <p className={styles.date}>{format(new Date(latestDate), 'MMMM d, yyyy')}</p>
+                {isDetailPage && isAuthor && (
+                  <>
+                    <button onClick={handleEdit} className={styles.buttons}>
+                      Edit
+                    </button>
+                    <Popconfirm
+                      title="Are you sure you want to delete this article?"
+                      onConfirm={handleDelete}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <button type="button" className={styles.buttons}>
+                        Delete
+                      </button>
+                    </Popconfirm>
+                  </>
+                )}
               </div>
               <Avatar size={64} src={article.author.image} alt={article.author.username} />
             </div>
