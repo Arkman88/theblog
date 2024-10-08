@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card, Form, Input, Button, message, Typography } from 'antd';
-import { useGetArticleQuery, useUpdateArticleMutation } from '../../../store/articlesApi';
+import { useGetArticleQuery, useUpdateArticleMutation, useFetchArticlesQuery } from '../../../store/articlesApi';
 import { useParams, useNavigate } from 'react-router-dom';
 import Spinner from '../../spinner/spinner';
 
@@ -13,6 +13,7 @@ const EditArticle = () => {
   const { slug } = useParams();
   const { data: articleData, error } = useGetArticleQuery(slug);
   const [updateArticle] = useUpdateArticleMutation();
+  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
   const [tagList, setTags] = useState(['']);
   const navigate = useNavigate();
 
@@ -42,6 +43,7 @@ const EditArticle = () => {
         },
       }).unwrap();
       message.success(`Article updated successfully! Title: ${result.article.title}`);
+      await refetchArticles();
       navigate('/articles');
     } catch (error) {
       message.error('Failed to update article');
@@ -85,6 +87,7 @@ const EditArticle = () => {
             title: articleData.article.title,
             description: articleData.article.description,
             text: articleData.article.body,
+            tags: tagList,
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
