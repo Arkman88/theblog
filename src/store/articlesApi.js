@@ -15,6 +15,7 @@ export const articlesApi = createApi({
   endpoints: (builder) => ({
     fetchArticles: builder.query({
       query: ({ limit = 5, offset = 0 }) => `articles?limit=${limit}&offset=${offset}`,
+      // refetchOnMountOrArgChange: true,
     }),
     getArticle: builder.query({
       query: (slug) => `articles/${slug}`,

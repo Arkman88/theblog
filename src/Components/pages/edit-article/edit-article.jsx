@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, Form, Input, Button, message, Typography } from 'antd';
 import { useGetArticleQuery, useUpdateArticleMutation } from '../../../store/articlesApi';
 import { useParams, useNavigate } from 'react-router-dom';
+import Spinner from '../../spinner/spinner';
 
 import styles from './edit-article.module.scss';
 
@@ -68,7 +69,7 @@ const EditArticle = () => {
   };
 
   if (!articleData) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   return (
@@ -77,7 +78,17 @@ const EditArticle = () => {
         <Title level={3} className={styles['edit-article-title']}>
           Edit Article
         </Title>
-        <Form name="edit-article" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form
+          name="edit-article"
+          layout="vertical"
+          initialValues={{
+            title: articleData.article.title,
+            description: articleData.article.description,
+            text: articleData.article.body,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+        >
           <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Please input the title!' }]}>
             <Input placeholder="Title" defaultValue={articleData.article.title} />
           </Form.Item>
