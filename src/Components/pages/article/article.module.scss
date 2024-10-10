@@ -75,11 +75,27 @@
 .date {
     margin: 0;
     color: #b3b0b0;
+    margin-bottom: 10px;
 }
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.delete, .edit {
+    background: none;
+    border: 1px solid #52C41A;
+    color: #52C41A;
+    border-radius: 5px;
+    width: 80px;
+    height: 20px;
+}
+
+.delete {
+    border-color: red;
+    color: red;
 }
 
 @media (max-width: 768px) {

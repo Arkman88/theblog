@@ -76,7 +76,7 @@ const Login = () => {
           </Form.Item>
         </Form>
 
-        <div className="register-link">
+        <div className={styles['register-link']}>
           <Text>Don`t have an account? </Text>
           <Link to="/sign-up">Sign Up</Link>
         </div>

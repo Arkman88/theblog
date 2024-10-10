@@ -103,8 +103,8 @@ const Article = ({ article, isDetailPage }) => {
                 <p className={styles['user-name']}>{article.author.username}</p>
                 <p className={styles.date}>{format(new Date(latestDate), 'MMMM d, yyyy')}</p>
                 {isDetailPage && isAuthor && (
-                  <>
-                    <button onClick={handleEdit} className={styles.buttons}>
+                  <div className={styles.buttons}>
+                    <button onClick={handleEdit} className={styles.edit}>
                       Edit
                     </button>
                     <Popconfirm
@@ -113,11 +113,11 @@ const Article = ({ article, isDetailPage }) => {
                       okText="Yes"
                       cancelText="No"
                     >
-                      <button type="button" className={styles.buttons}>
+                      <button type="button" className={styles.delete}>
                         Delete
                       </button>
                     </Popconfirm>
-                  </>
+                  </div>
                 )}
               </div>
               <Avatar size={64} src={article.author.image} alt={article.author.username} />
