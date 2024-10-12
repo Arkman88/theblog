@@ -41,16 +41,21 @@
     border: 1px solid #52C41A;
     border-radius: 5px;
     color: #52C41A;
-    width: 100px;
-    height: 30px;
+    width: 109px;
+    height: 40px;
     margin-right: 20px;
-    font-size: 12px;
+    font-size: 14px;
     padding: 0;
 }
 
 .username {
     font-size: 20px;
     margin-right: 5px;
+}
+
+.username:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .image {
