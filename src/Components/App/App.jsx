@@ -26,7 +26,6 @@ const App = () => {
   const user = useSelector((state) => state.user.user);
 
   const isAuthenticated = !!user;
-  console.log('user is login: ', isAuthenticated);
 
   return (
     <div className={styles.app}>
