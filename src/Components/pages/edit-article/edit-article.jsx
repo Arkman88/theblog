@@ -15,13 +15,19 @@ const EditArticle = () => {
   const [updateArticle] = useUpdateArticleMutation();
   const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
   const [tagList, setTags] = useState(['']);
+  const [form] = Form.useForm();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (articleData) {
       setTags(articleData.article.tagList);
+      form.setFieldsValue({
+        title: articleData.article.title,
+        description: articleData.article.description,
+        text: articleData.article.body,
+      });
     }
-  }, [articleData]);
+  }, [articleData, form]);
 
   useEffect(() => {
     if (error) {
@@ -81,19 +87,20 @@ const EditArticle = () => {
           Edit Article
         </Title>
         <Form
+          form={form}
           name="edit-article"
           layout="vertical"
           initialValues={{
-            title: articleData.article.title,
-            description: articleData.article.description,
-            text: articleData.article.body,
+            title: articleData?.article.title,
+            description: articleData?.article.description,
+            text: articleData?.article.body,
             tags: tagList,
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Please input the title!' }]}>
-            <Input placeholder="Title" defaultValue={articleData.article.title} />
+            <Input placeholder="Title" />
           </Form.Item>
 
           <Form.Item
@@ -101,11 +108,11 @@ const EditArticle = () => {
             name="description"
             rules={[{ required: true, message: 'Please input the description!' }]}
           >
-            <Input placeholder="Short Description" defaultValue={articleData.article.description} />
+            <Input placeholder="Short Description" />
           </Form.Item>
 
           <Form.Item label="Text" name="text" rules={[{ required: true, message: 'Please input the article text!' }]}>
-            <TextArea rows={4} placeholder="Article Text" defaultValue={articleData.article.body} />
+            <TextArea rows={4} placeholder="Article Text" />
           </Form.Item>
 
           <Form.Item label="Tags">
