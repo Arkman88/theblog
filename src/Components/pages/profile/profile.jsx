@@ -86,6 +86,7 @@ const Profile = () => {
             rules={[
               { required: true, message: 'Please input your username!' },
               { min: 3, message: 'Username must be at least 3 characters long!' },
+              { max: 20, message: 'Username must be no more than 20 characters long!' },
             ]}
             hasFeedback
           >
@@ -107,7 +108,10 @@ const Profile = () => {
           <Form.Item
             label="New password"
             name="password"
-            rules={[{ min: 6, message: 'Password must be at least 6 characters long!' }]}
+            rules={[
+              { min: 6, message: 'Password must be at least 6 characters long!' },
+              { max: 40, message: 'Password must be no more than 40 characters long!' },
+            ]}
             hasFeedback
           >
             <Input.Password placeholder="New password (optional)" />
