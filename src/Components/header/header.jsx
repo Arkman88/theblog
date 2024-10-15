@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
+  const { refetch: refetchArticles, isFetching } = useFetchArticlesQuery({ limit: 5, offset: 0 });
 
   const handleLogout = () => {
     dispatch(clearUser());
@@ -22,9 +22,14 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <h2 className={styles.blog} onClick={handleArticlesList}>
-        The blog!
-      </h2>
+      <button
+        className={styles.homebtn}
+        disabled={isFetching}
+        onClick={handleArticlesList}
+        style={{ cursor: isFetching ? 'not-allowed' : 'pointer' }}
+      >
+        <h2 className={styles.blog}>The blog!</h2>
+      </button>
       <div>
         {user ? (
           <div className={styles.profile}>

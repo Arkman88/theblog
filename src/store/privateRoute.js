@@ -7,7 +7,9 @@ import Spinner from '../Components/spinner/spinner';
 
 const PrivateRoute = ({ children, isAuthenticated, user }) => {
   const { slug } = useParams();
-  const { data: articleData, isLoading } = useGetArticleQuery(slug);
+  const { data: articleData, isLoading } = useGetArticleQuery(slug, {
+    skip: !slug,
+  });
 
   const isAuthor = articleData?.article.author.username === user?.username;
 

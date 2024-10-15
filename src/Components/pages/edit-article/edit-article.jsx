@@ -13,7 +13,7 @@ const EditArticle = () => {
   const { slug } = useParams();
   const { data: articleData, error } = useGetArticleQuery(slug);
   const [updateArticle] = useUpdateArticleMutation();
-  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
+  const { refetch: refetchArticles, isFetching } = useFetchArticlesQuery({ limit: 5, offset: 0 });
   const [tagList, setTags] = useState(['']);
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -135,7 +135,7 @@ const EditArticle = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block disabled={isFetching}>
               Update
             </Button>
           </Form.Item>

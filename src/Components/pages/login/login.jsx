@@ -11,7 +11,7 @@ const { Title, Text } = Typography;
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const user = useSelector(selectUser);
@@ -29,7 +29,6 @@ const Login = () => {
       dispatch(setUser(result.user));
       navigate('/');
     } catch (error) {
-      console.log(error.data.errors);
       const errorMessage = error?.data?.errors
         ? Object.entries(error.data.errors).map(([field, msg]) => `${field} ${msg}`)
         : ['Login failed!'];
@@ -69,7 +68,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block disabled={isLoading}>
               Login
             </Button>
           </Form.Item>

@@ -10,8 +10,8 @@ const { TextArea } = Input;
 
 const NewArticle = () => {
   const [tagList, setTags] = useState(['']);
-  const [createArticle] = useCreateArticleMutation();
-  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
+  const [createArticle, { isLoading }] = useCreateArticleMutation();
+  const { refetch: refetchArticles, isFetching } = useFetchArticlesQuery({ limit: 5, offset: 0 });
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -23,6 +23,7 @@ const NewArticle = () => {
         body: text,
         tagList,
       }).unwrap();
+      console.log(result);
       message.success(`Article created successfully! Title: ${result.article.title}`);
 
       await refetchArticles();
@@ -95,8 +96,8 @@ const NewArticle = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Send
+            <Button type="primary" htmlType="submit" block disabled={isLoading || isFetching}>
+              Create article
             </Button>
           </Form.Item>
         </Form>

@@ -13,7 +13,7 @@ const { Title } = Typography;
 const Profile = () => {
   const dispatch = useDispatch();
   const { data: userData, error, isLoading } = useGetUserQuery();
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const user = useSelector(selectUser);
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -127,7 +127,7 @@ const Profile = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block disabled={isUpdating}>
               Save
             </Button>
           </Form.Item>

@@ -8,10 +8,12 @@ import styles from './articles-list.module.scss';
 const ArticlesList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  const { data, error, isLoading } = useFetchArticlesQuery({ limit, offset: (currentPage - 1) * limit });
+  const { data, error, isLoading, isFetching } = useFetchArticlesQuery({ limit, offset: (currentPage - 1) * limit });
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    if (!isLoading && !isFetching) {
+      setCurrentPage(page);
+    }
   };
 
   if (isLoading) return <Spinner />;
@@ -28,6 +30,7 @@ const ArticlesList = () => {
         total={data.articlesCount}
         onChange={handlePageChange}
         showSizeChanger={false}
+        disabled={isFetching}
         style={{ marginTop: 20, textAlign: 'center' }}
       />
     </div>

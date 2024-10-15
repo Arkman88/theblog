@@ -9,7 +9,7 @@ import styles from './register.module.scss';
 const { Title, Text } = Typography;
 
 const Register = () => {
-  const [createUser] = useCreateUserMutation();
+  const [createUser, { isLoading }] = useCreateUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -116,7 +116,7 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block disabled={isLoading}>
               Create
             </Button>
           </Form.Item>
