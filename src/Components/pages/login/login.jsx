@@ -29,11 +29,11 @@ const Login = () => {
       dispatch(setUser(result.user));
       navigate('/');
     } catch (error) {
+      console.log(error.data.errors);
       const errorMessage = error?.data?.errors
-        ? Object.entries(error.data.errors).map(([field, msg]) => ({ name: field, errors: [msg] }))
+        ? Object.entries(error.data.errors).map(([field, msg]) => `${field} ${msg}`)
         : ['Login failed!'];
-      form.setFields(error?.data?.errors ? errorMessage : []);
-      message.error('There were some errors with your login.');
+      message.error(errorMessage);
     }
   };
 
