@@ -2,22 +2,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUser, selectUser } from '../../store/slices/userSlice';
 import styles from './header.module.scss';
+import { useFetchArticlesQuery } from '../../store/articlesApi';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const { refetch: refetchArticles } = useFetchArticlesQuery({ limit: 5, offset: 0 });
 
   const handleLogout = () => {
     dispatch(clearUser());
     navigate('/');
   };
 
+  const handleArticlesList = async () => {
+    await refetchArticles();
+    navigate('/');
+  };
+
   return (
     <header className={styles.header}>
-      <Link to={'/'}>
-        <h2 className={styles.blog}>The blog!</h2>
-      </Link>
+      <h2 className={styles.blog} onClick={handleArticlesList}>
+        The blog!
+      </h2>
       <div>
         {user ? (
           <div className={styles.profile}>

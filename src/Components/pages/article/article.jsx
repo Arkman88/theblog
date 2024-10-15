@@ -85,7 +85,9 @@ const Article = ({ article, isDetailPage }) => {
             <div className={styles['article-tags']}>
               {article.tagList &&
                 article.tagList.length > 0 &&
-                article.tagList.map((tag, index) => <Tag key={`${tag}-${index}`}>{tag}</Tag>)}
+                article.tagList
+                  .filter((tag) => tag.trim() !== '')
+                  .map((tag, index) => <Tag key={`${tag}-${index}`}>{tag}</Tag>)}
             </div>
             {isDetailPage ? (
               <>
