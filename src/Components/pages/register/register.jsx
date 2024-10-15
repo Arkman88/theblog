@@ -12,6 +12,7 @@ const Register = () => {
   const [createUser] = useCreateUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
 
   const onFinish = async (values) => {
     try {
@@ -22,10 +23,12 @@ const Register = () => {
       navigate('/');
     } catch (error) {
       if (error?.data?.errors) {
-        const errorMessages = Object.entries(error.data.errors)
-          .map(([field, message]) => `${field}: ${message}`)
-          .join(', ');
-        message.error(`${errorMessages}`);
+        const formattedErrors = Object.entries(error.data.errors).map(([field, message]) => ({
+          name: field,
+          errors: [message],
+        }));
+
+        form.setFields(formattedErrors);
       } else {
         message.error('Registration failed!');
       }
@@ -43,7 +46,7 @@ const Register = () => {
         <Title level={3} className="register-title">
           Create new account
         </Title>
-        <Form name="register" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} name="register" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             label="Username"
             name="username"

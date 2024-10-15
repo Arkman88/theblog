@@ -13,6 +13,7 @@ import Profile from '../pages/profile';
 import NewArticle from '../pages/new-article';
 import NotFound from '../pages/not-found';
 import EditArticle from '../pages/edit-article';
+import ArticlePage from '../pages/article-page/article-page';
 
 import styles from './App.module.scss';
 
@@ -33,14 +34,21 @@ const App = () => {
       <Routes>
         <Route path="/" element={<ArticlesList />} />
         <Route path="/articles" element={<ArticlesList />} />
-        <Route path="/articles/:slug" element={<ArticlesList />} />
+        <Route path="/articles/:slug" element={<ArticlePage />} />
         <Route path="/sign-up" element={<Register />} />
         <Route path="/sign-in" element={<Login />} />
-        <Route path="/articles/:slug/edit" element={<EditArticle />} />
+        <Route
+          path="/articles/:slug/edit"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated} user={user}>
+              <EditArticle />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/profile"
           element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
+            <PrivateRoute isAuthenticated={isAuthenticated} user={user}>
               <Profile />
             </PrivateRoute>
           }
@@ -48,7 +56,7 @@ const App = () => {
         <Route
           path="/new-article"
           element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
+            <PrivateRoute isAuthenticated={isAuthenticated} user={user}>
               <NewArticle />
             </PrivateRoute>
           }

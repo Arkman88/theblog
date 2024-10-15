@@ -45,7 +45,7 @@ const EditArticle = () => {
           title,
           description,
           body: text,
-          tagList,
+          tagList: tagList.filter((tag) => tag.trim() !== ''),
         },
       }).unwrap();
       message.success(`Article updated successfully! Title: ${result.article.title}`);

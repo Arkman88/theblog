@@ -32,7 +32,6 @@ const Login = () => {
       const errorMessage = error?.data?.errors
         ? Object.entries(error.data.errors).map(([field, msg]) => ({ name: field, errors: [msg] }))
         : ['Login failed!'];
-
       form.setFields(error?.data?.errors ? errorMessage : []);
       message.error('There were some errors with your login.');
     }

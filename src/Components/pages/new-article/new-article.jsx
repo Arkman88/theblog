@@ -26,7 +26,7 @@ const NewArticle = () => {
       message.success(`Article created successfully! Title: ${result.article.title}`);
 
       await refetchArticles();
-      navigate('/articles');
+      navigate(`/articles/${result.article.slug}`);
     } catch (error) {
       message.error('Failed to create article');
       console.error('Error:', error);
